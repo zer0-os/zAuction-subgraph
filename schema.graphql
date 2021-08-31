@@ -1,0 +1,12 @@
+type TokenSale @entity {
+  id: ID!
+  tokenId: ID!
+  contractAddress: Bytes!
+  amount: BigInt!
+  buyer: Account!
+  seller: Account!
+}
+
+type Account @entity {
+  id: ID!
+}

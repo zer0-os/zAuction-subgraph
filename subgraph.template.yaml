@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ZAuction
+    # prettier-ignore
+    network: {{ network }}
+    source:
+      address: "{{zAuction_address}}"
+      abi: ZAuction
+      # prettier-ignore
+      startBlock: {{ start_block }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - BidAccepted
+      abis:
+        - name: ZAuction
+          file: ./abis/ZAuction.json
+      eventHandlers:
+        - event: BidAccepted(uint256,indexed address,indexed address,uint256,address,uint256,uint256)
+          handler: handleBidAccepted
+      file: ./src/zauction.ts
