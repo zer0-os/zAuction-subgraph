@@ -5,6 +5,7 @@ type TokenSale @entity {
   amount: BigInt!
   buyer: Account!
   seller: Account!
+  timestamp: BigInt!
 }
 
 type Account @entity {
