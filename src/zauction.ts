@@ -9,15 +9,15 @@ export function handleBidAccepted(event: BidAccepted): void {
   seller.save();
 
   let saleId =
-    event.params.nftaddress.toHexString() +
+    event.params.nftAddress.toHexString() +
     "-" +
-    event.params.tokenid.toString() +
+    event.params.tokenId.toString() +
     "-" +
     event.block.timestamp.toString();
 
   let sale = new TokenSale(saleId);
-  sale.tokenId = uint256ToByteArray(event.params.tokenid).toHex();
-  sale.contractAddress = event.params.nftaddress;
+  sale.tokenId = uint256ToByteArray(event.params.tokenId).toHex();
+  sale.contractAddress = event.params.nftAddress;
   sale.amount = event.params.amount;
   sale.buyer = bidder.id;
   sale.seller = seller.id;

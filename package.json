@@ -3,10 +3,12 @@
   "license": "MIT",
   "scripts": {
     "prepare:kovan": "mustache config/kovan.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "deploy:kovan": "yarn prepare:kovan && yarn internal:deploy",
+    "deploy:rinkeby": "yarn prepare:rinkeby && yarn internal:deploy",
     "deploy:mainnet": "yarn prepare:mainnet && yarn internal:deploy",
-    "codegen": "yarn prepare:kovan && graph codegen",
+    "codegen": "yarn prepare:rinkeby && graph codegen",
     "build": "graph build",
     "internal:deploy": "graph codegen && graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/",
     "auth": "graph auth https://api.thegraph.com/deploy/",
