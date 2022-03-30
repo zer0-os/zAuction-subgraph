@@ -10,7 +10,7 @@
     "deploy:mainnet": "yarn prepare:mainnet && yarn internal:deploy",
     "codegen": "yarn prepare:rinkeby && graph codegen",
     "build": "graph build",
-    "internal:deploy": "graph codegen && graph deploy --product hosted-service zer0-os/zauction-rinkeby --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/",
+    "internal:deploy": "graph codegen && graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/",
     "auth": "graph auth https://api.thegraph.com/deploy/",
     "create-local": "graph create --node http://localhost:8020/",
     "remove-local": "graph remove --node http://localhost:8020/",
@@ -19,8 +19,8 @@
     "lint-fix": "yarn lint --fix"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "0.21.1",
-    "@graphprotocol/graph-ts": "0.22.0",
+    "@graphprotocol/graph-cli": "0.29.0",
+    "@graphprotocol/graph-ts": "0.26.0",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "eslint": "7.22.0",
