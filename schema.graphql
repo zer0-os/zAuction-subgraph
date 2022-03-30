@@ -8,6 +8,26 @@ type TokenSale @entity {
   timestamp: BigInt!
 }
 
+type DomainTokenSold @entity {
+  id: ID!
+  buyer: Account!
+  seller: Account!
+  amount: BigInt!
+  tokenId: BigInt!
+}
+
+type BuyPriceSet @entity {
+  id: ID!
+  tokenId: BigInt!
+  amount: BigInt!
+}
+
+type Cancellation @entity {
+  id: ID!
+  bidNonce: BigInt!
+  bidder: Account!
+}
+
 type Account @entity {
   id: ID!
 }
