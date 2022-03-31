@@ -1,7 +1,7 @@
 {
   "network": "mainnet",
-  "zAuction_address": "0x1ee3F16aa8081891CfcfAB59d0DBFe03f2B77ff6",
-  "start_block": 14257953,
+  "zAuction_address": "0x411973Fa81158A4c7767a0D6F7dF62723fDd541F",
+  "start_block": 14490643,
   "legacy_zAuction_address": "0x05cBD37cA528B7ea50800aA80ddD0F9F30C952F0",
   "legacy_start_block": 13045518
 }
