@@ -15,6 +15,7 @@ type DomainTokenSold @entity {
   amount: BigInt!
   tokenId: String!
   contractAddress: String!
+  timestamp: BigInt!
 }
 
 type BuyPriceSet @entity {

@@ -63,6 +63,7 @@ export function handleDomainSold(event: DomainSold): void {
   domainSold.amount = event.params.amount;
   domainSold.tokenId = toPaddedHexString(event.params.tokenId);
   domainSold.contractAddress = event.params.nftAddress.toHex();
+  domainSold.timestamp = event.block.timestamp;
   domainSold.save();
 }
 
