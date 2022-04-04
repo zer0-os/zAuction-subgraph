@@ -1,7 +1,7 @@
 type TokenSale @entity {
   id: ID!
-  tokenId: ID!
-  contractAddress: Bytes!
+  tokenId: String!
+  contractAddress: String!
   amount: BigInt!
   buyer: Account!
   seller: Account!
@@ -13,12 +13,14 @@ type DomainTokenSold @entity {
   buyer: Account!
   seller: Account!
   amount: BigInt!
-  tokenId: BigInt!
+  tokenId: String!
+  contractAddress: String!
+  timestamp: BigInt!
 }
 
 type BuyPriceSet @entity {
   id: ID!
-  tokenId: BigInt!
+  tokenId: String!
   amount: BigInt!
 }
 

@@ -15,3 +15,9 @@ export function uint256ToByteArray(i: BigInt): ByteArray {
   let hex = i.toHex().slice(2).padStart(64, "0");
   return byteArrayFromHex(hex);
 }
+
+export function toPaddedHexString(i: BigInt): string {
+  let hex = i.toHex();
+  let padded = hex.substr(0, 2) + hex.substr(2).padStart(64, "0");
+  return padded;
+}

@@ -1,21 +1,29 @@
-import { Account, TokenSale, DomainTokenSold, BuyPriceSet, Cancellation } from "../generated/schema";
-import { BidAccepted, DomainSold, BuyNowPriceSet, BidCancelled } from "../generated/ZAuction/ZAuction";
-import { uint256ToByteArray } from "./utils";
+import {
+  Account,
+  TokenSale,
+  DomainTokenSold,
+  BuyPriceSet,
+  Cancellation,
+} from "../generated/schema";
+import {
+  BidAccepted,
+  DomainSold,
+  BuyNowPriceSet,
+  BidCancelled,
+} from "../generated/ZAuction/ZAuction";
+import { toPaddedHexString, uint256ToByteArray } from "./utils";
 import { ethereum } from "@graphprotocol/graph-ts";
 
-function resolveAccount(address: string) {
+function resolveAccount(address: string): Account {
   let account = Account.load(address);
   if (!account) {
     account = new Account(address);
   }
-  return account;
+  return account as Account;
 }
 
-function id(event: ethereum.Event) {
-  const id = (event.block.number
-    .toString()
-    .concat("-")
-    .concat(event.logIndex.toString()));
+function id(event: ethereum.Event): string {
+  const id = event.block.number.toString().concat("-").concat(event.logIndex.toString());
   return id;
 }
 
@@ -33,8 +41,8 @@ export function handleBidAccepted(event: BidAccepted): void {
     event.block.timestamp.toString();
 
   const sale = new TokenSale(saleId);
-  sale.tokenId = uint256ToByteArray(event.params.tokenId).toHex();
-  sale.contractAddress = event.params.nftAddress;
+  sale.tokenId = toPaddedHexString(event.params.tokenId);
+  sale.contractAddress = event.params.nftAddress.toHex();
   sale.amount = event.params.amount;
   sale.buyer = bidder.id;
   sale.seller = seller.id;
@@ -42,7 +50,7 @@ export function handleBidAccepted(event: BidAccepted): void {
   sale.save();
 }
 
-export function handleDomainSold(event: DomainSold) {
+export function handleDomainSold(event: DomainSold): void {
   const domainSold = new DomainTokenSold(id(event));
 
   const buyer = resolveAccount(event.params.buyer.toHex());
@@ -53,19 +61,21 @@ export function handleDomainSold(event: DomainSold) {
   domainSold.buyer = buyer.id;
   domainSold.seller = seller.id;
   domainSold.amount = event.params.amount;
-  domainSold.tokenId = event.params.tokenId;
+  domainSold.tokenId = toPaddedHexString(event.params.tokenId);
+  domainSold.contractAddress = event.params.nftAddress.toHex();
+  domainSold.timestamp = event.block.timestamp;
   domainSold.save();
 }
 
-export function handleBuyNowPriceSet(event: BuyNowPriceSet) {
+export function handleBuyNowPriceSet(event: BuyNowPriceSet): void {
   const priceSet = new BuyPriceSet(id(event));
 
-  priceSet.tokenId = event.params.tokenId;
+  priceSet.tokenId = toPaddedHexString(event.params.tokenId);
   priceSet.amount = event.params.amount;
   priceSet.save();
 }
 
-export function handleBidCancelled(event: BidCancelled) {
+export function handleBidCancelled(event: BidCancelled): void {
   const cancellation = new Cancellation(id(event));
 
   const bidder = resolveAccount(event.params.bidder.toHex());
