@@ -2,9 +2,11 @@
   "name": "zNS-subgraph",
   "license": "MIT",
   "scripts": {
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
     "prepare:kovan": "mustache config/kovan.json subgraph.template.yaml > subgraph.yaml",
     "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
+    "deploy:goerli": "yarn prepare:goerli && yarn internal:deploy",
     "deploy:kovan": "yarn prepare:kovan && yarn internal:deploy",
     "deploy:rinkeby": "yarn prepare:rinkeby && yarn internal:deploy",
     "deploy:mainnet": "yarn prepare:mainnet && yarn internal:deploy",

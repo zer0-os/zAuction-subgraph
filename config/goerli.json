@@ -1,0 +1,7 @@
+{
+  "network": "goerli",
+  "zAuction_address": "0xdF0f9F007A38aD25E0c02959374f38719Af5fCf8",
+  "start_block": 6755718,
+  "legacy_zAuction_address": "0x0000000000000000000000000000000000000000",
+  "legacy_start_block": 6755718
+}
