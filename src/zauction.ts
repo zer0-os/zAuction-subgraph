@@ -42,6 +42,7 @@ export function handleBidAccepted(event: BidAccepted): void {
     event.block.timestamp.toString();
 
   const sale = new TokenSale(saleId);
+  sale.bidNonce = event.params.bidNonce;
   sale.tokenId = toPaddedHexString(event.params.tokenId);
   sale.contractAddress = event.params.nftAddress.toHex();
   sale.amount = event.params.amount;
@@ -66,6 +67,7 @@ export function handleBidAcceptedV2(event: BidAcceptedV2): void {
     event.block.timestamp.toString();
 
   const sale = new TokenSale(saleId);
+  sale.bidNonce = event.params.bidNonce;
   sale.tokenId = toPaddedHexString(event.params.tokenId);
   sale.contractAddress = event.params.nftAddress.toHex();
   sale.amount = event.params.amount;

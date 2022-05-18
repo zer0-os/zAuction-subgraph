@@ -1,5 +1,6 @@
 type TokenSale @entity {
   id: ID!
+  bidNonce: BigInt!
   tokenId: String!
   contractAddress: String!
   amount: BigInt!
