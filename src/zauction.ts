@@ -2,7 +2,7 @@ import {
   Account,
   TokenSale,
   DomainTokenSold,
-  BuyPriceSet,
+  BuyNowListing,
   Cancellation,
 } from "../generated/schema";
 import {
@@ -10,10 +10,15 @@ import {
   DomainSold,
   BuyNowPriceSet,
   BidCancelled,
+  ZAuction,
 } from "../generated/ZAuction/ZAuction";
 import { toPaddedHexString } from "./utils";
 import { ethereum } from "@graphprotocol/graph-ts";
-import { BidAcceptedV2, BuyNowPriceSetV2, DomainSoldV2 } from "../generated/LegacyZAuction/ZAuction";
+import {
+  BidAcceptedV2,
+  BuyNowPriceSetV2,
+  DomainSoldV2,
+} from "../generated/LegacyZAuction/ZAuction";
 
 function resolveAccount(address: string): Account {
   let account = Account.load(address);
@@ -21,6 +26,14 @@ function resolveAccount(address: string): Account {
     account = new Account(address);
   }
   return account as Account;
+}
+
+function resolveListing(tokenId: string): BuyNowListing {
+  let listing = BuyNowListing.load(tokenId);
+  if (!listing) {
+    listing = new BuyNowListing(tokenId);
+  }
+  return listing as BuyNowListing;
 }
 
 function id(event: ethereum.Event): string {
@@ -41,6 +54,8 @@ export function handleBidAccepted(event: BidAccepted): void {
     "-" +
     event.block.timestamp.toString();
 
+  const contract = ZAuction.bind(event.address);
+
   const sale = new TokenSale(saleId);
   sale.bidNonce = event.params.bidNonce;
   sale.tokenId = toPaddedHexString(event.params.tokenId);
@@ -49,6 +64,8 @@ export function handleBidAccepted(event: BidAccepted): void {
   sale.buyer = bidder.id;
   sale.seller = seller.id;
   sale.timestamp = event.block.timestamp;
+  sale.paymentToken = contract.wildToken().toHex();
+  sale.topLevelDomainId = contract.getTopLevelId(event.params.tokenId).toHex();
 
   sale.save();
 }
@@ -119,20 +136,21 @@ export function handleDomainSoldV2(event: DomainSoldV2): void {
 }
 
 export function handleBuyNowPriceSet(event: BuyNowPriceSet): void {
-  const priceSet = new BuyPriceSet(id(event));
+  const listing = resolveListing(toPaddedHexString(event.params.tokenId));
 
-  priceSet.tokenId = toPaddedHexString(event.params.tokenId);
-  priceSet.amount = event.params.amount;
-  priceSet.save();
+  const contract = ZAuction.bind(event.address);
+
+  listing.amount = event.params.amount;
+  listing.paymentToken = contract.wildToken().toHex();
+  listing.save();
 }
 
 export function handleBuyNowPriceSetV2(event: BuyNowPriceSetV2): void {
-  const priceSet = new BuyPriceSet(id(event));
+  const listing = resolveListing(toPaddedHexString(event.params.tokenId));
 
-  priceSet.tokenId = toPaddedHexString(event.params.tokenId);
-  priceSet.amount = event.params.amount;
-  priceSet.paymentToken = event.params.paymentToken.toHex();
-  priceSet.save();
+  listing.amount = event.params.amount;
+  listing.paymentToken = event.params.paymentToken.toHex();
+  listing.save();
 }
 
 export function handleBidCancelled(event: BidCancelled): void {

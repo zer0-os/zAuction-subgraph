@@ -7,8 +7,8 @@ type TokenSale @entity {
   buyer: Account!
   seller: Account!
   timestamp: BigInt!
-  paymentToken: String
-  topLevelDomainId: String
+  paymentToken: String!
+  topLevelDomainId: String!
 }
 
 type DomainTokenSold @entity {
@@ -19,12 +19,12 @@ type DomainTokenSold @entity {
   tokenId: String!
   contractAddress: String!
   timestamp: BigInt!
-  paymentToken: String,
-  topLevelDomainId: String
+  paymentToken: String!
+  topLevelDomainId: String!
 }
 
-type BuyPriceSet @entity {
-  id: ID!
+type BuyNowListing @entity {
+  # id: ID!
   tokenId: String!
   amount: BigInt!
   paymentToken: String
