@@ -24,8 +24,7 @@ type DomainTokenSold @entity {
 }
 
 type BuyNowListing @entity {
-  # id: ID!
-  tokenId: String!
+  id: String! # tokenId
   amount: BigInt!
   paymentToken: String
 }

@@ -139,7 +139,7 @@ export function handleBuyNowPriceSet(event: BuyNowPriceSet): void {
   const listing = resolveListing(toPaddedHexString(event.params.tokenId));
 
   const contract = ZAuction.bind(event.address);
-
+  
   listing.amount = event.params.amount;
   listing.paymentToken = contract.wildToken().toHex();
   listing.save();
