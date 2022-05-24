@@ -1,0 +1,8 @@
+import { Address } from "@graphprotocol/graph-ts";
+export function getWildTokenForNetwork(): Address {
+  return Address.fromString("{{wild_token}}");
+}
+
+export function getWildDomainNetworkIdForNetwork(): string {
+  return "{{wild_network_id}}";
+}

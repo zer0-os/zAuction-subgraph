@@ -10,7 +10,6 @@ import {
   DomainSold,
   BuyNowPriceSet,
   BidCancelled,
-  ZAuction,
 } from "../generated/ZAuction/ZAuction";
 import { toPaddedHexString } from "./utils";
 import { ethereum } from "@graphprotocol/graph-ts";
@@ -19,6 +18,10 @@ import {
   BuyNowPriceSetV2,
   DomainSoldV2,
 } from "../generated/LegacyZAuction/ZAuction";
+import { 
+  getWildTokenForNetwork,
+  getWildDomainNetworkIdForNetwork
+} from "./wildInfo";
 
 function resolveAccount(address: string): Account {
   let account = Account.load(address);
@@ -54,8 +57,7 @@ export function handleBidAccepted(event: BidAccepted): void {
     "-" +
     event.block.timestamp.toString();
 
-  const contract = ZAuction.bind(event.address);
-
+  // still check .bind with zauction here when local
   const sale = new TokenSale(saleId);
   sale.bidNonce = event.params.bidNonce;
   sale.tokenId = toPaddedHexString(event.params.tokenId);
@@ -64,8 +66,8 @@ export function handleBidAccepted(event: BidAccepted): void {
   sale.buyer = bidder.id;
   sale.seller = seller.id;
   sale.timestamp = event.block.timestamp;
-  sale.paymentToken = contract.wildToken().toHex();
-  sale.topLevelDomainId = contract.getTopLevelId(event.params.tokenId).toHex();
+  sale.paymentToken = getWildTokenForNetwork().toHex();
+  sale.topLevelDomainId = getWildDomainNetworkIdForNetwork()
 
   sale.save();
 }
@@ -111,6 +113,8 @@ export function handleDomainSold(event: DomainSold): void {
   domainSold.tokenId = toPaddedHexString(event.params.tokenId);
   domainSold.contractAddress = event.params.nftAddress.toHex();
   domainSold.timestamp = event.block.timestamp;
+  domainSold.paymentToken = getWildTokenForNetwork().toHex();
+  domainSold.topLevelDomainId = getWildDomainNetworkIdForNetwork()
 
   domainSold.save();
 }
@@ -138,10 +142,8 @@ export function handleDomainSoldV2(event: DomainSoldV2): void {
 export function handleBuyNowPriceSet(event: BuyNowPriceSet): void {
   const listing = resolveListing(toPaddedHexString(event.params.tokenId));
 
-  const contract = ZAuction.bind(event.address);
-  
   listing.amount = event.params.amount;
-  listing.paymentToken = contract.wildToken().toHex();
+  listing.paymentToken = getWildTokenForNetwork().toHex();
   listing.save();
 }
 
