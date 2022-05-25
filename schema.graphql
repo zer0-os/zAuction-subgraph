@@ -1,11 +1,14 @@
 type TokenSale @entity {
   id: ID!
+  bidNonce: BigInt!
   tokenId: String!
   contractAddress: String!
   amount: BigInt!
   buyer: Account!
   seller: Account!
   timestamp: BigInt!
+  paymentToken: String!
+  topLevelDomainId: String!
 }
 
 type DomainTokenSold @entity {
@@ -16,12 +19,14 @@ type DomainTokenSold @entity {
   tokenId: String!
   contractAddress: String!
   timestamp: BigInt!
+  paymentToken: String!
+  topLevelDomainId: String!
 }
 
-type BuyPriceSet @entity {
-  id: ID!
-  tokenId: String!
+type BuyNowListing @entity {
+  id: String! # tokenId
   amount: BigInt!
+  paymentToken: String
 }
 
 type Cancellation @entity {

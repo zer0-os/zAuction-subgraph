@@ -3,5 +3,7 @@
   "zAuction_address": "0x411973Fa81158A4c7767a0D6F7dF62723fDd541F",
   "start_block": 14490643,
   "legacy_zAuction_address": "0x05cBD37cA528B7ea50800aA80ddD0F9F30C952F0",
-  "legacy_start_block": 13045518
+  "legacy_start_block": 13045518,
+  "wild_token": "0x2a3bFF78B79A009976EeA096a51A948a3dC00e34",
+  "wild_network_id": "0x196c0a1e30004b9998c97b363e44f1f4e97497e59d52ad151208e9393d70bb3b"
 }

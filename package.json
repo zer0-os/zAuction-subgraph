@@ -4,8 +4,8 @@
   "scripts": {
     "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
     "prepare:kovan": "mustache config/kovan.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml && mustache config/rinkeby.json src/wildInfo.ts.template src/wildInfo.ts",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/wildInfo.ts.template src/wildInfo.ts",
     "deploy:goerli": "yarn prepare:goerli && yarn internal:deploy",
     "deploy:kovan": "yarn prepare:kovan && yarn internal:deploy",
     "deploy:rinkeby": "yarn prepare:rinkeby && yarn internal:deploy",

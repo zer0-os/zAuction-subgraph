@@ -23,10 +23,16 @@ dataSources:
       eventHandlers:
         - event: BidAccepted(uint256,indexed address,indexed address,uint256,address,uint256,uint256)
           handler: handleBidAccepted
+        - event: BidAcceptedV2(uint256,indexed address,indexed address,uint256,address,uint256,uint256,address,uint256)
+          handler: handleBidAcceptedV2
         - event: DomainSold(indexed address,indexed address,uint256,address,indexed uint256)
           handler: handleDomainSold
+        - event: DomainSoldV2(indexed address,indexed address,uint256,address,indexed uint256,address,uint256)
+          handler: handleDomainSoldV2
         - event: BuyNowPriceSet(indexed uint256,uint256)
           handler: handleBuyNowPriceSet
+        - event: BuyNowPriceSetV2(indexed uint256,uint256,address)
+          handler: handleBuyNowPriceSetV2
         - event: BidCancelled(uint256,indexed address)
           handler: handleBidCancelled
       file: ./src/zauction.ts
