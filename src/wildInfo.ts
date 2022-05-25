@@ -1,6 +1,6 @@
 import { Address } from "@graphprotocol/graph-ts";
 export function getWildTokenForNetwork(): Address {
-  return Address.fromString("0x3Ae5d499cfb8FB645708CC6DA599C90e64b33A79");
+  return Address.fromString("0x2a3bFF78B79A009976EeA096a51A948a3dC00e34");
 }
 
 export function getWildDomainNetworkIdForNetwork(): string {
