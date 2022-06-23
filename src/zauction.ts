@@ -4,6 +4,7 @@ import {
   DomainTokenSold,
   BuyNowListing,
   Cancellation,
+  Global,
 } from "../generated/schema";
 import {
   BidAccepted,
@@ -18,10 +19,18 @@ import {
   BuyNowPriceSetV2,
   DomainSoldV2,
 } from "../generated/LegacyZAuction/ZAuction";
-import { 
-  getWildTokenForNetwork,
-  getWildDomainNetworkIdForNetwork
-} from "./wildInfo";
+import { getWildTokenForNetwork, getWildDomainNetworkIdForNetwork } from "./wildInfo";
+
+function getIndexId(): i32 {
+  let global = Global.load("1");
+  if (!global) {
+    global = new Global("1");
+    global.uniqueEntityId = 0;
+  }
+  global.uniqueEntityId += 1;
+  global.save();
+  return global.uniqueEntityId;
+}
 
 function resolveAccount(address: string): Account {
   let account = Account.load(address);
@@ -35,6 +44,7 @@ function resolveListing(tokenId: string): BuyNowListing {
   let listing = BuyNowListing.load(tokenId);
   if (!listing) {
     listing = new BuyNowListing(tokenId);
+    listing.indexId = getIndexId();
   }
   return listing as BuyNowListing;
 }
@@ -64,10 +74,11 @@ export function handleBidAccepted(event: BidAccepted): void {
   sale.contractAddress = event.params.nftAddress.toHex();
   sale.amount = event.params.amount;
   sale.buyer = bidder.id;
-  sale.seller = seller.id;
+  sale.seller = seller.id;  
   sale.timestamp = event.block.timestamp;
   sale.paymentToken = getWildTokenForNetwork().toHex();
-  sale.topLevelDomainId = getWildDomainNetworkIdForNetwork()
+  sale.topLevelDomainId = getWildDomainNetworkIdForNetwork();
+  sale.indexId = getIndexId();
 
   sale.save();
 }
@@ -95,6 +106,7 @@ export function handleBidAcceptedV2(event: BidAcceptedV2): void {
   sale.timestamp = event.block.timestamp;
   sale.paymentToken = event.params.paymentToken.toHex();
   sale.topLevelDomainId = event.params.topLevelDomainId.toHex();
+  sale.indexId = getIndexId();
 
   sale.save();
 }
@@ -114,7 +126,8 @@ export function handleDomainSold(event: DomainSold): void {
   domainSold.contractAddress = event.params.nftAddress.toHex();
   domainSold.timestamp = event.block.timestamp;
   domainSold.paymentToken = getWildTokenForNetwork().toHex();
-  domainSold.topLevelDomainId = getWildDomainNetworkIdForNetwork()
+  domainSold.topLevelDomainId = getWildDomainNetworkIdForNetwork();
+  domainSold.indexId = getIndexId()
 
   domainSold.save();
 }
@@ -135,6 +148,7 @@ export function handleDomainSoldV2(event: DomainSoldV2): void {
   domainSold.timestamp = event.block.timestamp;
   domainSold.paymentToken = event.params.paymentToken.toHex();
   domainSold.topLevelDomainId = event.params.topLevelDomainId.toHex();
+  domainSold.indexId = getIndexId();
 
   domainSold.save();
 }
@@ -161,5 +175,6 @@ export function handleBidCancelled(event: BidCancelled): void {
   const bidder = resolveAccount(event.params.bidder.toHex());
   cancellation.bidNonce = event.params.bidNonce;
   cancellation.bidder = bidder.id;
+  cancellation.indexId = getIndexId();
   cancellation.save();
 }
