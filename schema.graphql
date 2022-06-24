@@ -12,6 +12,11 @@ type TokenSale @entity {
   topLevelDomainId: String!
 }
 
+type GlobalTokenSale @entity {
+  id: ID!
+  uniqueEntityId: Int!
+}
+
 type DomainTokenSold @entity {
   id: ID!
   indexId: Int!
@@ -25,11 +30,21 @@ type DomainTokenSold @entity {
   topLevelDomainId: String!
 }
 
+type GlobalDomainTokenSold @entity {
+  id: ID!
+  uniqueEntityId: Int!
+}
+
 type BuyNowListing @entity {
   id: String! # tokenId
   indexId: Int!
   amount: BigInt!
   paymentToken: String
+}
+
+type GlobalBuyNowListing @entity {
+  id: ID!
+  uniqueEntityId: Int!
 }
 
 type Cancellation @entity {
@@ -39,11 +54,11 @@ type Cancellation @entity {
   bidder: Account!
 }
 
-type Account @entity {
-  id: ID!
-}
-
-type Global @entity {
+type GlobalCancellation @entity {
   id: ID!
   uniqueEntityId: Int!
+}
+
+type Account @entity {
+  id: ID!
 }
