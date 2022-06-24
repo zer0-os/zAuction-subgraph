@@ -1,5 +1,6 @@
 type TokenSale @entity {
   id: ID!
+  indexId: Int!
   bidNonce: BigInt!
   tokenId: String!
   contractAddress: String!
@@ -9,10 +10,16 @@ type TokenSale @entity {
   timestamp: BigInt!
   paymentToken: String!
   topLevelDomainId: String!
+}
+
+type GlobalTokenSale @entity {
+  id: ID!
+  uniqueEntityId: Int!
 }
 
 type DomainTokenSold @entity {
   id: ID!
+  indexId: Int!
   buyer: Account!
   seller: Account!
   amount: BigInt!
@@ -23,16 +30,33 @@ type DomainTokenSold @entity {
   topLevelDomainId: String!
 }
 
+type GlobalDomainTokenSold @entity {
+  id: ID!
+  uniqueEntityId: Int!
+}
+
 type BuyNowListing @entity {
   id: String! # tokenId
+  indexId: Int!
   amount: BigInt!
   paymentToken: String
 }
 
+type GlobalBuyNowListing @entity {
+  id: ID!
+  uniqueEntityId: Int!
+}
+
 type Cancellation @entity {
   id: ID!
+  indexId: Int!
   bidNonce: BigInt!
   bidder: Account!
+}
+
+type GlobalCancellation @entity {
+  id: ID!
+  uniqueEntityId: Int!
 }
 
 type Account @entity {
