@@ -10,7 +10,7 @@
     "deploy:kovan": "yarn prepare:kovan && yarn internal:deploy",
     "deploy:rinkeby": "yarn prepare:rinkeby && yarn internal:deploy",
     "deploy:mainnet": "yarn prepare:mainnet && yarn internal:deploy",
-    "codegen": "yarn prepare:rinkeby && graph codegen",
+    "codegen": "graph codegen",
     "build": "graph build",
     "internal:deploy": "graph codegen && graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/",
     "auth": "graph auth https://api.thegraph.com/deploy/",
